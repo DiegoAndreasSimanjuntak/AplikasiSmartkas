@@ -367,58 +367,30 @@ private void hitungTotal() {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
+    javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+    fileChooser.setDialogTitle("Simpan Laporan Sebagai");
+
+    int userSelection = fileChooser.showSaveDialog(this);
+
+    if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
+        java.io.File selectedFile = fileChooser.getSelectedFile();
+
         try {
-        DefaultTableModel model = (DefaultTableModel) TabelLaporan.getModel();
+            SimpanService.exportCSV(
+                TabelLaporan,
+                lblPemasukan.getText(),
+                lblPengeluaran.getText(),
+                lblSisa.getText(),
+                selectedFile
+            );
 
-        if (model.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Tidak ada data untuk disimpan!");
-            return;
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Laporan berhasil disimpan!");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                "Gagal menyimpan file: " + e.getMessage());
         }
-
-        // Pilih lokasi penyimpanan file
-        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
-        fileChooser.setDialogTitle("Simpan Laporan Sebagai");
-        int userSelection = fileChooser.showSaveDialog(this);
-
-        if (userSelection == javax.swing.JFileChooser.APPROVE_OPTION) {
-            java.io.File fileToSave = fileChooser.getSelectedFile();
-
-            // Tambahkan ekstensi .csv jika belum ada
-            if (!fileToSave.getAbsolutePath().toLowerCase().endsWith(".csv")) {
-                fileToSave = new java.io.File(fileToSave.getAbsolutePath() + ".csv");
-            }
-
-            try (FileWriter fw = new FileWriter(fileToSave)) {
-                // Tulis header kolom
-                for (int i = 0; i < model.getColumnCount(); i++) {
-                    fw.write(model.getColumnName(i));
-                    if (i < model.getColumnCount() - 1) fw.write(",");
-                }
-                fw.write("\n");
-
-                // Tulis data baris
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    for (int j = 0; j < model.getColumnCount(); j++) {
-                        fw.write(String.valueOf(model.getValueAt(i, j)));
-                        if (j < model.getColumnCount() - 1) fw.write(",");
-                    }
-                    fw.write("\n");
-                }
-
-                // Tambahkan ringkasan total di bawah
-                fw.write("\nTotal Pemasukan:," + lblPemasukan.getText());
-                fw.write("\nTotal Pengeluaran:," + lblPengeluaran.getText());
-                fw.write("\nSisa Uang:," + lblSisa.getText());
-
-                fw.flush();
-                JOptionPane.showMessageDialog(this, "Laporan berhasil disimpan ke:\n" + fileToSave.getAbsolutePath());
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Gagal menyimpan file: " + e.getMessage());
-            }
-        }
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage());
     }
     }//GEN-LAST:event_btnSimpanActionPerformed
 

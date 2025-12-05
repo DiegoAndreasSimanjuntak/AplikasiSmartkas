@@ -210,42 +210,28 @@ public class Register extends javax.swing.JFrame {
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
     // TODO add your handling code here:
-    String fullname = jtxtFullname.getText();
-    String email = jxtxEmail.getText();
-    String password = new String(jxtxPassword.getPassword());
+        String fullname = jtxtFullname.getText();
+        String email = jxtxEmail.getText();
+        String password = new String(jxtxPassword.getPassword());
 
-    // Validasi input
-    if (fullname.isEmpty() || email.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        // Panggil koneksi ke database
-        Connection conn = Koneksi.getKoneksi();
-
-        // Query untuk menyimpan data
-        String sql = "INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, fullname);
-        pst.setString(2, email);
-        pst.setString(3, password);
-
-        // Eksekusi perintah
-        int row = pst.executeUpdate();
-
-        if (row > 0) {
-            JOptionPane.showMessageDialog(this, "Registrasi berhasil! Silakan login.");
-            
-            // Setelah sukses, langsung buka form Login
-            Login loginForm = new Login();
-            loginForm.setVisible(true);
-            this.dispose(); // Tutup form Register
+        // Validasi
+        if (fullname.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Semua field wajib diisi!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Gagal menyimpan data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        // Panggil controller
+        UserController userController = new UserController();
+
+        boolean success = userController.registerUser(fullname, email, password);
+
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Registrasi berhasil! Silakan login.");
+
+            Login loginForm = new Login();
+            loginForm.setVisible(true);
+            this.dispose();
+        } 
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void btnToLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToLoginActionPerformed

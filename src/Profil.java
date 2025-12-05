@@ -305,6 +305,7 @@ private void formListenerSetup() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         // TODO add your handling code here:
         int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
@@ -336,36 +337,18 @@ private void formListenerSetup() {
 
     private void btnsimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsimpanActionPerformed
         // TODO add your handling code here:
-        String fullname = jtxtFullName.getText();
-        String email = jtxtEmail.getText();
-        String username = jtxtUsername.getText();
-        String password = new String(jtxtPassword.getPassword());
+        String fullname = jtxtFullName.getText().trim();
+        String email = jtxtEmail.getText().trim();
+        String username = jtxtUsername.getText().trim();
 
-        if (fullname.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Semua kolom harus diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        ProfilController pc = new ProfilController();
 
-        Connection conn = Koneksi.getKoneksi();
-        try {
-            String sql = "INSERT INTO users (fullname, email, username, password) VALUES (?, ?, ?, ?)";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, fullname);
-            ps.setString(2, email);
-            ps.setString(3, username);
-            ps.setString(4, password);
-            ps.executeUpdate();
+        boolean success = pc.updateProfile(fullname, email, username);
 
-            JOptionPane.showMessageDialog(this, "Data berhasil disimpan!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-
-            // Kosongkan form setelah simpan
-            jtxtFullName.setText("");
-            jtxtEmail.setText("");
-            jtxtUsername.setText("");
-            jtxtPassword.setText("");
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Gagal menyimpan data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Profil berhasil diperbarui!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Gagal memperbarui profil!");
         }
     }//GEN-LAST:event_btnsimpanActionPerformed
 

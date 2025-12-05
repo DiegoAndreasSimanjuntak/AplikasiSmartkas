@@ -1,3 +1,9 @@
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
+
 public class Login extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
@@ -184,44 +190,31 @@ public class Login extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         String email = jtxtEmail.getText().trim();
-        String password = new String(jtxtPassword.getPassword()).trim();
-    
+    String password = new String(jtxtPassword.getPassword()).trim();
+
     if (email.isEmpty() || password.isEmpty()) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Email dan password harus diisi!", 
-            "Peringatan", 
-            javax.swing.JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this,
+            "Email dan password harus diisi!",
+            "Peringatan",
+            JOptionPane.WARNING_MESSAGE);
         return;
     }
 
-    try {
-        java.sql.Connection conn = Koneksi.getKoneksi();
-        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setString(1, email);
-        pst.setString(2, password);
-        java.sql.ResultSet rs = pst.executeQuery();
+    // Panggil AuthController
+    AuthController auth = new AuthController();
+    String fullname = auth.login(email, password);
 
-        if (rs.next()) {
-            // Login berhasil
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Login berhasil, selamat datang " + rs.getString("fullname") + "!");
-            
-            new MenuDashboard().setVisible(true);
-            this.dispose();
-        } else {
-            // Gagal login
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Email atau password salah!", 
-                "Login Gagal", 
-                javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+    if (fullname != null) {
+        JOptionPane.showMessageDialog(this,
+            "Login berhasil, selamat datang " + fullname + "!");
 
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Terjadi kesalahan koneksi: " + e.getMessage(), 
-            "Error", 
-            javax.swing.JOptionPane.ERROR_MESSAGE);
+        new MenuDashboard().setVisible(true);
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(this,
+            "Email atau password salah!",
+            "Login Gagal",
+            JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_btnLoginActionPerformed
 

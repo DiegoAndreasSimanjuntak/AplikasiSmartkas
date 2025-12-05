@@ -343,15 +343,13 @@ private void updateKategori() {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
-     String jenis = jComboBox1.getSelectedItem().toString();
+        String jenis = jComboBox1.getSelectedItem().toString();
     String kategori = jComboBox2.getSelectedItem().toString();
     String nominalText = jtxtNominal.getText().trim();
     String catatan = jtxtCatatan.getText().trim();
-
-    // Ambil tanggal dari JDateChooser
     java.util.Date selectedDate = jDateChooser1.getDate();
 
-    // Validasi input
+    // Validasi dasar
     if (nominalText.isEmpty() || selectedDate == null) {
         javax.swing.JOptionPane.showMessageDialog(this, "Nominal dan Tanggal wajib diisi!");
         return;
@@ -365,64 +363,27 @@ private void updateKategori() {
         return;
     }
 
-    // Format tanggal ke MySQL (YYYY-MM-DD)
-    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-    String tanggal = sdf.format(selectedDate);
-
-    try (java.sql.Connection conn = Koneksi.getKoneksi()) {
-
-        // --- Cek apakah kategori sudah ada di tabel categories ---
-        int categoryId = 0;
-        String sqlKategori = "SELECT id FROM categories WHERE name = ?";
-        try (java.sql.PreparedStatement ps = conn.prepareStatement(sqlKategori)) {
-            ps.setString(1, kategori);
-            try (java.sql.ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    categoryId = rs.getInt("id");
-                } else {
-                    // Jika belum ada, tambahkan otomatis
-                    String insertKategori = "INSERT INTO categories (name, user_id) VALUES (?, ?)";
-                    try (java.sql.PreparedStatement ps2 = conn.prepareStatement(insertKategori, java.sql.Statement.RETURN_GENERATED_KEYS)) {
-                        ps2.setString(1, kategori);
-                        ps2.setInt(2, 1); // user_id default 1
-                        ps2.executeUpdate();
-                        try (java.sql.ResultSet rs2 = ps2.getGeneratedKeys()) {
-                            if (rs2.next()) categoryId = rs2.getInt(1);
-                        }
-                    }
-                }
-            }
-        }
-
-        // --- Simpan data ke tabel laporan ---
-        String sqlInsert = "INSERT INTO laporan (kategori, jenis, nominal, catatan, tanggal) VALUES (?, ?, ?, ?, ?)";
-        try (java.sql.PreparedStatement ps = conn.prepareStatement(sqlInsert)) {
-            ps.setString(1, kategori); // simpan nama kategori, bukan id
-            ps.setString(2, jenis);
-            ps.setDouble(3, nominal);
-            ps.setString(4, catatan);
-            ps.setString(5, tanggal);
-            ps.executeUpdate();
-        }
+    try {
+        // PANGGIL CLASS SERVICE
+        LaporanService.simpanLaporan(jenis, kategori, nominal, catatan, selectedDate);
 
         javax.swing.JOptionPane.showMessageDialog(this, "✅ Data berhasil disimpan!");
 
-        // Kosongkan form setelah disimpan
+        // Reset input
         jtxtNominal.setText("");
         jtxtCatatan.setText("");
         jDateChooser1.setDate(null);
 
-        // Tampilkan ulang form laporan
         new LihatLaporan().setVisible(true);
         dispose();
 
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "❌ Gagal menyimpan data: " + e.getMessage());
+    } catch (Exception ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "❌ Gagal menyimpan: " + ex.getMessage());
     }
 
-
     }//GEN-LAST:event_btnSimpanActionPerformed
-private void formListenerSetup() {
+
+    private void formListenerSetup() {
     // Klik Dashboard
     lblDashboard.addMouseListener(new java.awt.event.MouseAdapter() {
         @Override

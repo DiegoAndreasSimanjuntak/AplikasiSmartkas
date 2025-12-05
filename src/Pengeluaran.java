@@ -1,15 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author Defry Ananta
- */
-
-// File: Pengeluaran.java
-
 public class Pengeluaran extends Laporan {
     
     private String kategori; // Atribut khusus Pengeluaran

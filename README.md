@@ -1,6 +1,7 @@
 # Aplikasi Smartkas
 
 ## Halaman Aplikasi
+<img width="1304" height="710" alt="Cuplikan layar 2025-12-05 184952" src="https://github.com/user-attachments/assets/7981ae2b-c43c-4457-9a17-b2733507411c" />
 
 
 ## Anggota Kelompok

@@ -14,43 +14,32 @@
 ## Fitur-Fitur Aplikasi
 1️⃣ Login
 
-⦁	Validasi email & password
-⦁	Autentikasi database
+Halaman Login merupakan antarmuka pertama yang muncul saat aplikasi dijalankan. Halaman ini berfungsi sebagai gerbang keamanan sistem, di mana pengguna diwajibkan memasukkan kredensial berupa surel (email) dan kata sandi (password) yang valid untuk dapat mengakses fitur utama.
 
 2️⃣ Registrasi (Sign Up)
 
-⦁	Simpan data pengguna baru
-⦁	Tidak boleh email duplikat
-⦁	Password aman (hashing bisa ditambahkan)
+Halaman Registrasi digunakan oleh pengguna baru untuk mendaftarkan akun ke dalam sistem database smartkas. Pada halaman ini, pengguna diminta untuk melengkapi data diri yang meliputi nama lengkap, alamat surel, dan kata sandi. Sistem akan melakukan validasi sebelum menyimpan data tersebut ke tabel users.
 
 3️⃣ Dashboard
 
-Menampilkan:
-⦁	Menu navigasi (Sidebar)
-⦁	Sapaan selamat datang
-⦁	Tombol-tombol menuju fitur aplikasi
-
+Setelah proses login berhasil, pengguna akan diarahkan ke halaman Dashboard. Halaman ini dirancang dengan tampilan yang bersih dan sederhana untuk menyambut pengguna. Pada bagian tengah, ditampilkan pesan "Selamat Datang di Aplikasi SmartKas" disertai dengan slogan motivasi "Kendalikan uangmu sebelum uang yang mengendalikanmu". Di sisi kiri layar, terdapat panel navigasi (sidebar) yang memudahkan pengguna untuk berpindah ke fitur-fitur lainnya.
 
 4️⃣ Tambah Transaksi
 
-Form input meliputi:
-⦁	Jenis (Pemasukan / Pengeluaran)
-⦁	Nominal
-⦁	Catatan
-⦁	Tanggal
+Halaman ini merupakan fitur inti untuk mencatat transaksi keuangan. Interaksi utama pada halaman ini dirancang dinamis untuk memudahkan pengguna:
+1.	Pemilihan Jenis: Pengguna memilih jenis transaksi (Pemasukan atau Pengeluaran).
+2.	Pemilihan Kategori: Implementasi kategori menggunakan komponen Combo Box. Daftar kategori akan menyesuaikan secara otomatis berdasarkan jenis yang dipilih:
+Pemasukan: Gaji, Hadiah, Investasi, Penjualan, Lainnya dan Pengeluaran: Makanan, Transportasi, Pendidikan, Kesehatan, Hiburan, Tagihan, Lainnya.
+3.	Fitur Fleksibilitas: Terdapat opsi "Lainnya" yang disediakan apabila kategori yang diinginkan pengguna tidak tersedia dalam daftar standar.
+
 
 5️⃣ Lihat Laporan
 
-⦁	Tabel daftar transaksi
-⦁	Total pemasukan
-⦁	Total pengeluaran
-⦁	Sisa saldo
+Menampilkan Tabel daftar transaksi, Total pemasukan, Total pengeluaran, dan Sisa saldo Serta Fitur Edit, Hapus dan Simpan Laporan
 
 6️⃣ Profil Pengguna
-Menampilkan data user
 
-Dapat mengubah:
-nama, email, password
+Dapat mengubah: Nama Lengkap, Username, email, dan password
 
 ## Implementasi Konsep OOP
 Implementasi Konsep PBO

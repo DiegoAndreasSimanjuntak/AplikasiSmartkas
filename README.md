@@ -52,90 +52,39 @@ Menampilkan data user
 Dapat mengubah:
 nama, email, password
 
-## Konsep OOP yang digunakan
-1. Encapsulation (Enkapsulasi)
+## Implementasi Konsep OOP
+Implementasi Konsep PBO
+Pengembangan aplikasi SmartKas menerapkan paradigma Pemrograman Berorientasi Objek (PBO) secara menyeluruh. Penerapan konsep ini bertujuan untuk menciptakan kode yang modular, aman, dan dapat digunakan kembali (reusable). Berikut adalah analisis implementasi konsep-konsep utama PBO dalam aplikasi:
 
-Setiap class memiliki atribut private, misalnya:
+1. Enkapsulasi (Encapsulation)
+Enkapsulasi diterapkan untuk melindungi data sensitif dan memastikan bahwa atribut objek hanya dapat diakses atau dimodifikasi melalui mekanisme yang telah ditentukan.
 
-User: userId, fullname, email, password
+Implementasi: Penggunaan access modifier private pada atribut vital.
 
-Transaksi: jumlah, deskripsi
+Contoh pada Kode: Pada kelas Session.java, atribut userId dideklarasikan sebagai private static untuk mencegah akses langsung dari luar kelas yang berpotensi merusak integritas sesi pengguna. Akses terhadap variabel ini dibatasi melalui metode public yaitu setUserId() dan getUserId().
 
-Kategori: namaKategori
+2. Pewarisan (Inheritance)
+Pewarisan digunakan untuk mengadopsi properti dan perilaku dari kelas induk (superclass) ke kelas turunan (subclass), yang mengurangi duplikasi kode secara signifikan.
 
-Akses melalui getter & setter, sehingga data aman dan tidak dimodifikasi secara langsung.
+Implementasi pada GUI: Seluruh kelas antarmuka (seperti Login, MenuDashboard, TambahLaporan) mewarisi kelas javax.swing.JFrame. Hal ini memberikan kemampuan bagi kelas-kelas tersebut untuk berperan sebagai jendela aplikasi desktop standar.
 
-2. Inheritance (Pewarisan)
+Implementasi pada Model: Kelas Pemasukan dan Pengeluaran merupakan turunan dari kelas induk Laporan. Dengan demikian, kedua kelas tersebut secara otomatis mewarisi atribut umum seperti tanggal, nominal, dan catatan tanpa perlu pendefinisian ulang.
 
-Agar kode tidak berulang, dibuat class BaseModel (jika diterapkan) atau konsep inheritance logis seperti:
+3. Polimorfisme (Polymorphism)
+Polimorfisme memungkinkan satu antarmuka digunakan untuk berbagai bentuk implementasi yang berbeda.
 
-Controller Inheritance Concept
+Implementasi (Overriding): Pada hierarki kelas Laporan, terdapat metode abstrak getJenisLaporan(). Metode ini diimplementasikan ulang (override) dengan perilaku berbeda pada kelas turunannya: kelas Pemasukan mengembalikan nilai "Pemasukan", sedangkan kelas Pengeluaran mengembalikan nilai "Pengeluaran".
 
-AuthController, ProfileController, TransaksiController, dan KategoriController memiliki pola:
+Implementasi (Ad-hoc): Pada kelas TambahLaporan.java, diterapkan anonymous inner class dari MouseAdapter untuk menangani event klik tetikus yang berbeda-beda pada setiap tombol navigasi.
 
-menerima input
+4. Abstraksi (Abstraction)
+Abstraksi digunakan untuk menyembunyikan detail implementasi yang kompleks dan hanya menampilkan fungsionalitas utama kepada pengguna atau objek lain.
 
-validasi
+Implementasi: Kelas Laporan dideklarasikan sebagai abstract class. Hal ini menegaskan bahwa kelas Laporan hanya berfungsi sebagai kerangka dasar (blueprint) dan tidak dapat diinstansiasi menjadi objek secara langsung. Objek hanya dapat dibuat melalui bentuk konkretnya, yaitu Pemasukan atau Pengeluaran.
 
-memanggil model
+5. Pemisahan Logika (Separation of Concerns)
+Sebagai bentuk implementasi arsitektur perangkat lunak yang baik, aplikasi ini memisahkan kode antarmuka (View) dengan kode pemrosesan (Logic).
 
-mengembalikan status sukses/gagal
-
-Konsep pewarisan yang biasa diterapkan:
-
-Controller
-   ↑
-   ├── AuthController
-   ├── ProfileController
-   ├── TransaksiController
-   └── KategoriController
-
-
-Jadi semua controller mewarisi sifat dasar:
-🔹 proses data
-🔹 koneksi model
-🔹 mengembalikan output
-
-Jika kamu ingin, saya bisa buatkan BaseController.java untuk inheritance asli.
-
-3. Polymorphism
-
-Beberapa method memiliki nama sama tetapi beda perilaku.
-
-Contoh method:
-
-tambah()
-
-
-Digunakan oleh:
-
-TransaksiController.tambah()
-
-KategoriController.tambahKategori()
-
-Contoh lainnya:
-
-update()
-
-
-Digunakan pada model User, Transaksi, dan Kategori.
-
-Method sama, objek berbeda, perilaku berbeda.
-
-4. Abstraction (Abstraksi)
-
-Model hanya menyimpan data & logic dasar, tidak perlu tahu cara tampil di UI.
-
-Controller menyembunyikan detail model sehingga UI hanya pakai fungsi:
-
-updateProfile()
-
-getByUser()
-
-tambahKategori()
-
-tambahTransaksi()
-
-UI tidak tahu logika SQL, hash password, dst.
+Contoh Nyata: Kelas Register.java hanya berfungsi mengambil input dari pengguna. Ketika tombol daftar ditekan, kelas ini tidak melakukan penyimpanan data secara langsung, melainkan memanggil metode registerUser() yang berada di dalam kelas UserController.java. Pendekatan ini membuat struktur kode lebih rapi dan memudahkan proses debugging jika terjadi kesalahan pada salah satu lapisan.
 
 

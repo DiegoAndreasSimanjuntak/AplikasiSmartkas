@@ -32,14 +32,18 @@ Halaman ini merupakan fitur inti untuk mencatat transaksi keuangan. Interaksi ut
 Pemasukan: Gaji, Hadiah, Investasi, Penjualan, Lainnya dan Pengeluaran: Makanan, Transportasi, Pendidikan, Kesehatan, Hiburan, Tagihan, Lainnya.
 3.	Fitur Fleksibilitas: Terdapat opsi "Lainnya" yang disediakan apabila kategori yang diinginkan pengguna tidak tersedia dalam daftar standar.
 
-
 5️⃣ Lihat Laporan
 
-Menampilkan Tabel daftar transaksi, Total pemasukan, Total pengeluaran, dan Sisa saldo Serta Fitur Edit, Hapus dan Simpan Laporan
+Halaman ini berfungsi sebagai pusat pengelolaan data keuangan. Selain menampilkan rekapitulasi transaksi dalam bentuk tabel (JTable), halaman ini dilengkapi dengan tombol-tombol aksi untuk memanipulasi data:
+1. Fitur Monitoring: Menampilkan kolom tanggal, kategori, jenis, catatan, dan nominal, serta menghitung total saldo secara otomatis di bagian bawah.
+2. Fitur Penyuntingan (Edit): Pengguna dapat memilih salah satu baris data untuk memperbaiki kesalahan, khususnya pada kolom kategori. Fitur ini memungkinkan pengguna mengetikkan nama kategori secara manual apabila sebelumnya memilih opsi "Lainnya".
+3. Fitur Penghapusan (Hapus): Tombol ini berfungsi untuk menghapus data transaksi yang tidak diinginkan atau salah input dari basis data secara permanen.
+4. Fitur Ekspor Data (Simpan): Terdapat tombol "Simpan" yang berfungsi untuk mengekspor seluruh data yang ada di tabel ke dalam format berkas .csv (Comma Separated Values). Fitur ini memudahkan pengguna untuk mengolah data lebih lanjut menggunakan aplikasi spreadsheet seperti Microsoft Excel.
+
 
 6️⃣ Profil Pengguna
 
-Dapat mengubah: Nama Lengkap, Username, email, dan password
+Halaman Profil difungsikan sebagai formulir untuk pembaruan data akun (Update Profile). Pada halaman ini, disediakan kolom-kolom input (JTextField) yang siap diisi oleh pengguna apabila ingin melakukan perubahan terhadap data nama, surel, atau kata sandi mereka. Pengguna cukup memasukkan data baru yang diinginkan lalu menyimpannya untuk memperbarui informasi di basis data.
 
 ## Implementasi Konsep OOP
 Implementasi Konsep PBO
